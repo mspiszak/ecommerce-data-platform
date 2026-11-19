@@ -149,6 +149,9 @@ terraform plan -var="env=dev"
 
 # 5. Uruchomienie joba (po wgraniu danych do raw/orders/)
 aws glue start-job-run --job-name orders-etl-job
+
+> Na Windows (PowerShell) zamiast `export X="..."` użyj `$env:X = "..."`,
+> a zamiast `| tee apply.log` użyj `| Tee-Object -FilePath apply.log`.
 ```
 
 ## Output `terraform apply`
