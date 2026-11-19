@@ -1,0 +1,23 @@
+# Terraform state
+*.tfstate
+*.tfstate.backup
+*.tfstate.*.backup
+
+# Zmienne z sekretami
+*.tfvars
+!terraform.tfvars.example
+
+# Lokalny cache providerów i modułów
+.terraform/
+
+# Pliki planu
+*.tfplan
+tfplan
+crash.log
+crash.*.log
+
+# Zmienne środowiskowe
+.env
+
+# Pełny log z apply (ostatnie 20 linii wklejone do README.md)
+apply.log

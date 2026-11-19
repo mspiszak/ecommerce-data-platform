@@ -1,0 +1,71 @@
+# =============================================================================
+# WZÓR - skopiuj do terraform.tfvars i uzupełnij wartościami.
+# =============================================================================
+
+# --- Ogólne ------------------------------------------------------------------
+
+# Nazwa projektu - prefiks nazw zasobów (lowercase, [a-z0-9], 3-16 znaków)
+project = "ecommerce"
+
+# Środowisko: "dev" albo "prod" - steruje deletion_protection (RDS),
+# purge_protection (Key Vault), multi_az, backup_retention_period,
+# liczbą workerów Glue
+env = "dev"
+
+# Region AWS
+aws_region = "eu-west-1"
+
+# --- Sieć ------------------------------------------------------------------
+
+# true  = Terraform tworzy własne VPC + 2 prywatne podsieci w różnych AZ
+# false = użyj istniejącego VPC (wtedy uzupełnij vpc_id i private_subnet_ids)
+create_vpc = true
+
+# CIDR VPC tworzonego przez Terraform (tylko przy create_vpc = true);
+# musi mieścić się w vpc_cidr
+vpc_network_cidr = "10.10.0.0/16"
+
+# Tylko przy create_vpc = false: ID istniejącego VPC
+# vpc_id = "vpc-0123456789abcdef0"
+
+# Tylko przy create_vpc = false: min. 2 prywatne podsieci w różnych AZ
+# private_subnet_ids = [
+#   "subnet-0123456789abcdef1",
+#   "subnet-0123456789abcdef2",
+# ]
+
+# Zakres sieci wewnętrznej - jedyny CIDR z dostępem do RDS na porcie 5432
+vpc_cidr = "10.0.0.0/8"
+
+# --- RDS PostgreSQL ------------------------------------------------------------
+
+# Nazwa bazy danych
+db_name = "ecommerce"
+
+# Wersja PostgreSQL: "15" = najnowsza 15.x
+db_engine_version = "15"
+
+# Klasa instancji RDS
+db_instance_class = "db.t3.micro"
+
+# Rozmiar dysku RDS w GB (20-1000)
+db_allocated_storage = 20
+
+# --- Azure -------------------------------------------------------------------
+
+# Region Azure (lowercase, bez spacji)
+azure_location = "polandcentral"
+
+# Typ replikacji storage account: LRS / GRS / ZRS / RAGRS / GZRS
+azure_replication_type = "LRS"
+
+# --- SEKRETY ---------------------------------------------
+# db_username i db_password:
+#   export TF_VAR_db_username="ecomadmin"
+#   export TF_VAR_db_password="<min. 12 znaków, bez / @ \" i spacji>"
+#
+# Dane logowania do Azure:
+#   export ARM_CLIENT_ID="..."
+#   export ARM_CLIENT_SECRET="..."
+#   export ARM_TENANT_ID="..."
+#   export ARM_SUBSCRIPTION_ID="..."
